@@ -605,7 +605,7 @@ class electronic_invoice_fields(models.Model):
         array_tax_item = []
         if self.invoice_line_ids:
             for item in self.invoice_line_ids:
-
+                array_tax_item = []
                 logging.info("TAX IDS:::::::"+str(item.tax_ids))
                 if item.tax_ids:
                     for tax_item in item.tax_ids:
