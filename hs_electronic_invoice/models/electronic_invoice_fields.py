@@ -423,10 +423,16 @@ class electronic_invoice_fields(models.Model):
         payments_items = self.env["account.payment"].search(
             [('communication', '=', self.name)])
         payments = [item.amount for item in payments_items]
+        amount_untaxed_final = 0.00
+
+        if(len(self.amount_by_group) == len(self.invoice_line_ids) and len(self.amount_by_group) > 0):
+            amount_untaxed_final = self.amount_by_group[0][2]
+        else:
+            amount_untaxed_final = self.amount_untaxed
         payment_values = json.dumps({
             "payments_items": payments,
             "monto_impuesto_completo":  self.amount_by_group[1][1] if len(self.amount_by_group) > 1 else self.amount_by_group[0][1] if len(self.amount_by_group) == 1 else 0.00,
-            "amount_untaxed": self.amount_by_group[0][2] if len(self.amount_by_group) > 0 else abs(self.amount_untaxed),
+            "amount_untaxed": amount_untaxed_final,
             "total_discount_price": self.total_precio_descuento
         })
 
