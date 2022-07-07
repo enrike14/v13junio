@@ -426,7 +426,7 @@ class electronic_invoice_fields(models.Model):
         payment_values = json.dumps({
             "payments_items": payments,
             "monto_impuesto_completo": self.amount_by_group[0][1] if len(self.amount_by_group) > 0 else 0.00,
-            "amount_untaxed": self.amount_untaxed,
+            "amount_untaxed": self.amount_by_group[0][1] if len(self.amount_by_group) > 0 else abs(self.amount_untaxed),
             "total_discount_price": self.total_precio_descuento
         })
 
