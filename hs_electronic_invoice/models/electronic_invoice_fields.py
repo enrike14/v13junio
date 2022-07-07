@@ -628,11 +628,11 @@ class electronic_invoice_fields(models.Model):
                                 'amount': tax_item.amount,
                                 'group_tax_children': array_children
                             })
-                    else:
-                        array_tax_item.append({
-                            'amount_type': 'percent',
-                            'amount': '0'
-                        })
+                else:
+                    array_tax_item.append({
+                        'amount_type': 'percent',
+                        'amount': '0'
+                    })
 
                 itemLoad.append({
                     'typeCustomers': str(self.partner_id.TipoClienteFE),
