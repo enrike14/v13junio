@@ -425,7 +425,7 @@ class electronic_invoice_fields(models.Model):
         payments = [item.amount for item in payments_items]
         payment_values = json.dumps({
             "payments_items": payments,
-            "monto_impuesto_completo": self.amount_by_group[0][1],
+            "monto_impuesto_completo": elf.amount_by_group[0][1] if len(self.amount_by_group) > 0 else 0.00,
             "amount_untaxed": self.amount_untaxed,
             "total_discount_price": self.total_precio_descuento
         })
@@ -531,7 +531,7 @@ class electronic_invoice_fields(models.Model):
 
         sub_total_values = json.dumps({
             "amount_untaxed": self.amount_untaxed,
-            "amount_tax_completed": self.amount_by_group[0][1],
+            "amount_tax_completed": self.amount_by_group[0][1] if len(self.amount_by_group) > 0 else 0.00,
             "total_discount_price": self.total_precio_descuento,
             "items_qty": str(len(self.invoice_line_ids)),
             "payment_time": 1,
@@ -628,6 +628,11 @@ class electronic_invoice_fields(models.Model):
                                 'amount': tax_item.amount,
                                 'group_tax_children': array_children
                             })
+                    else:
+                        array_tax_item.append({
+                            'amount_type':	 'percent',
+                            'amount': '0'
+                        })
 
                 itemLoad.append({
                     'typeCustomers': str(self.partner_id.TipoClienteFE),
