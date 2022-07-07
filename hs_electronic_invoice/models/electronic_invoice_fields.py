@@ -606,6 +606,7 @@ class electronic_invoice_fields(models.Model):
         if self.invoice_line_ids:
             for item in self.invoice_line_ids:
 
+                logging.info("TAX IDS:::::::"+str(item.tax_ids))
                 if item.tax_ids:
                     for tax_item in item.tax_ids:
                         if tax_item.amount_type == 'percent':
